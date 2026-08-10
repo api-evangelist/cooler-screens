@@ -1,10 +1,20 @@
 aid: cooler-screens
 name: CoolerX
-description: 'CoolerX is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'CoolerX — formerly Cooler Screens — is an in-store retail media and merchandising
+  technology company that turns cooler doors, endcaps, checkout coolers and pharmacy fixtures
+  into IoT-connected digital screens. The platform pairs an AI "Intent Engine" for contextual
+  targeting and conversion-funnel optimization with a Dynamic Content Engine for creative
+  optimization, alongside campaign management, real-time measurement, and a data integration
+  hub for product, price, promotion and context data. It is deployed with retailers including
+  Kroger, Walgreens, Giant Eagle''s GetGo, Chevron and Western Union, and is built on Microsoft
+  Azure with NVIDIA, BOE, LG, Samsung and Foxconn as hardware and infrastructure partners.
+  CoolerX sells to retailers and brands through a demo and sales motion; as of this profile it
+  publishes no public developer program, API reference, SDK, or machine-readable specification.'
+image: https://www.coolerx.com/wp-content/uploads/2025/01/white-on-black-coolerX-logo.png
 url: https://raw.githubusercontent.com/api-evangelist/cooler-screens/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
+x-source-url: https://forgeglobal.com/cooler-screens_stock/
 x-tier: stub
 x-tier-reason: harvest
 specificationVersion: '0.20'
@@ -12,6 +22,14 @@ created: '2026-08-09'
 modified: '2026-08-09'
 tags:
 - Company
+- Retail
+- Retail Media
+- Advertising
+- Digital Signage
+- In-Store Media
+- Merchandising
+- Artificial Intelligence
+- Internet of Things
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -19,5 +37,34 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/cooler-screens-domain-security.yml
+- type: LLMsTxt
+  url: llms/cooler-screens-llms.txt
 - type: Website
-  url: https://forgeglobal.com/cooler-screens_stock/
+  url: https://www.coolerx.com/
+- type: PrivacyPolicy
+  url: https://www.coolerx.com/privacy-policy/
+x-enrichment:
+  date: '2026-08-09'
+  status: minimal
+  artifacts_added: 2
+  pass: local-v1
+x-coverage:
+  state: gated
+  reason: sales-gate
+  detail: >-
+    CoolerX runs api.coolerx.com and portal.coolerx.com — both resolve to Azure address
+    13.67.211.230 and both refuse connections on 80 and 443 — while the public site has no
+    developer, docs, or API page of any kind, leaving the "Request a Demo" contact form as the
+    only route to the platform.
+  evidence:
+  - url: https://api.coolerx.com/
+    status: 0
+  - url: https://www.coolerx.com/developers
+    status: 404
+  - url: https://www.coolerx.com/.well-known/api-catalog
+    status: 404
+  - url: https://www.coolerx.com/demo/
+    status: 200
+  checked: '2026-08-09'

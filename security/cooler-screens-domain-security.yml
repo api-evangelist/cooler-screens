@@ -1,0 +1,58 @@
+generated: '2026-08-09'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.coolerx.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Dec  9 23:59:59 2026 GMT
+  cert_subject: CN=www.coolerx.com
+  cert_issuer: DigiCert Inc / GeoTrust TLS RSA CA G1
+  hsts: null
+  notes: >-
+    GET / returns 307 to https://coolerx.com/index.php and that redirect response
+    carries no Strict-Transport-Security header. Application responses served from
+    the origin (e.g. /index.php, /company/) do include
+    "strict-transport-security: max-age=31536000; includeSubDomains; preload".
+- host: coolerx.com
+  https: false
+  tls_version: TLSv1.3
+  cert_expires: Jun 10 23:59:59 2025 GMT
+  cert_subject: CN=coolerx.com
+  cert_issuer: DigiCert, Inc. / GeoTrust Global TLS RSA4096 SHA256 2022 CA1
+  cert_expired: true
+  verify_result: '10 (certificate has expired)'
+  hsts: null
+  notes: >-
+    The apex host serves a certificate that expired 2025-06-10, so every TLS client
+    that validates the chain (curl, browsers, WebFetch) fails to connect. Observed
+    consistently across the Azure Front Door addresses the apex resolves to
+    (150.171.109.113 and 150.171.109.115). www.coolerx.com/ 307-redirects to
+    https://coolerx.com/index.php, so the canonical homepage path terminates on the
+    expired-certificate host. Probed 2026-08-09.
+- host: api.coolerx.com
+  https: false
+  reachable: false
+  dns_a: 13.67.211.230
+  notes: >-
+    DNS A record resolves, but TCP connections to 443 and 80 time out. No service
+    answered; treated as a private or firewalled partner endpoint, not a public API.
+- host: portal.coolerx.com
+  https: false
+  reachable: false
+  dns_a: 13.67.211.230
+  notes: >-
+    DNS A record resolves to the same address as api.coolerx.com; TCP connections to
+    443 and 80 time out.
+domains:
+- domain: coolerx.com
+  dnssec: false
+  caa: []
+  spf: true
+  spf_record: v=spf1 include:spf.protection.outlook.com -all
+  dmarc: false
+  nameservers:
+  - ns1-34.azure-dns.com
+  - ns2-34.azure-dns.net
+  - ns3-34.azure-dns.org
+  - ns4-34.azure-dns.info
