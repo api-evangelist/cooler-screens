@@ -1,0 +1,92 @@
+generated: '2026-08-12'
+method: probed
+source: live HTTPS probes of every CoolerX host on 2026-08-12
+name: CoolerX well-known probe
+description: >-
+  Probe of the RFC 8615 /.well-known/ namespace on every CoolerX host. The apex host
+  coolerx.com serves TWO real documents — an RFC 8414 OAuth 2.0 Authorization Server
+  Metadata document and an RFC 9728 OAuth 2.0 Protected Resource Metadata document —
+  both published by the WordPress MCP adapter that fronts the marketing site. Every
+  other well-known path 404s. Note that coolerx.com presents an EXPIRED TLS certificate
+  (see security/cooler-screens-domain-security.yml), so these documents are only
+  retrievable by a client that skips certificate validation; a conforming OAuth or MCP
+  client will fail the TLS handshake before it ever reads them.
+hosts:
+- host: coolerx.com
+  tls_note: >-
+    Certificate expired 2025-06-10; probes run with verification disabled. A standards-
+    conforming client cannot reach these documents.
+  paths:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json; charset=UTF-8
+    file: cooler-screens-oauth-authorization-server.json
+    document: true
+    note: >-
+      RFC 8414 Authorization Server Metadata. issuer https://coolerx.com, authorization
+      code + refresh token grants, PKCE S256 required, single scope "mcp", public
+      clients (token_endpoint_auth_methods_supported ["none"]) with
+      client_id_metadata_document_supported true.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json; charset=UTF-8
+    file: cooler-screens-oauth-protected-resource.json
+    document: true
+    note: >-
+      RFC 9728 Protected Resource Metadata. Names the protected resource as
+      https://coolerx.com/wp-json/mcp/mcp-oauth-server — the live MCP endpoint. Bearer
+      token in the Authorization header, scope "mcp".
+  - path: /.well-known/security.txt
+    status: 404
+    document: false
+  - path: /.well-known/openid-configuration
+    status: 404
+    document: false
+  - path: /.well-known/api-catalog
+    status: 404
+    document: false
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    document: false
+  - path: /.well-known/agent-card.json
+    status: 404
+    document: false
+  - path: /.well-known/agent.json
+    status: 404
+    document: false
+- host: www.coolerx.com
+  note: 307-redirects to https://coolerx.com/index.php; no independent well-known surface.
+- host: api.coolerx.com
+  note: >-
+    DNS A 13.67.211.230 resolves but TCP 80 and 443 time out. Not probeable; no
+    well-known surface reachable from the public internet.
+- host: portal.coolerx.com
+  note: Same address and same behaviour as api.coolerx.com — connections time out.
+- host: coolerscreens.com
+  soft_200_catch_all: true
+  note: >-
+    LEGACY PRE-REBRAND HOST — DO NOT CREDIT. This host answers HTTP 200 with the WordPress
+    marketing-site HTML shell for EVERY path, including paths that cannot exist. Probed
+    2026-08-12: /.well-known/agent-card.json 200, /.well-known/agent.json 200,
+    /openapi.json 200 — and the control probe /totally-made-up-path-xyz123 also returned
+    200 with a byte-identical HTML body. Every response is text/html beginning
+    "<!DOCTYPE html>" and carrying a pingback link to https://coolerx.com/xmlrpc.php.
+    These are soft 200s, not documents. No agent card, no OpenAPI and no well-known
+    document exists on this host, and no pointer is emitted from it. www.coolerscreens.com
+    307-redirects to https://coolerx.com/index.php.
+  control_probe:
+    url: https://coolerscreens.com/totally-made-up-path-xyz123
+    status: 200
+    content_type: text/html
+    conclusion: catch-all; all 200s on this host are worthless as evidence
+summary:
+  paths_probed: 8
+  documents_found: 2
+  security_txt: false
+  openid_configuration: false
+  agent_card: false
+pointers_emitted:
+- type: WellKnown
+  reason: >-
+    Two paths returned 200 carrying real JSON documents, not an SPA shell. SecurityTxt
+    is NOT emitted — /.well-known/security.txt 404s on every host.

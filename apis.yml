@@ -19,7 +19,7 @@ x-tier: stub
 x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-09'
-modified: '2026-08-09'
+modified: '2026-08-12'
 tags:
 - Company
 - Retail
@@ -30,7 +30,39 @@ tags:
 - Merchandising
 - Artificial Intelligence
 - Internet of Things
-apis: []
+apis:
+- name: CoolerX Website MCP Server
+  description: >-
+    A live, OAuth-protected Model Context Protocol endpoint served by CoolerX from its own
+    apex host and discovered through the RFC 9728 protected-resource metadata document at
+    https://coolerx.com/.well-known/oauth-protected-resource. It is published by the
+    WordPress MCP Adapter running on the coolerx.com marketing site, which exposes that
+    site''s WordPress Abilities API as MCP tools. It is a CONTENT surface for the website —
+    NOT the CoolerX retail-media platform, Intent Engine or Dynamic Content Engine, which
+    remain behind a sales gate at the unreachable api.coolerx.com and portal.coolerx.com.
+    Anonymous tools/list returns 401 with a conforming Bearer challenge, so the tool list is
+    not enumerated in this profile. The endpoint is undocumented on the CoolerX site and
+    coolerx.com serves a TLS certificate that expired 2025-06-10, so a certificate-validating
+    client cannot reach it.
+  humanURL: https://coolerx.com/
+  baseURL: https://coolerx.com/wp-json/mcp/mcp-oauth-server
+  tags:
+  - MCP
+  - Agents
+  - OAuth
+  - Content Management
+  - WordPress
+  properties:
+  - type: MCPServer
+    url: mcp/cooler-screens-mcp.yml
+  - type: Authentication
+    url: authentication/cooler-screens-authentication.yml
+  - type: OAuthScopes
+    url: scopes/cooler-screens-scopes.yml
+  - type: ErrorCatalog
+    url: errors/cooler-screens-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/cooler-screens-rate-limits.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -45,26 +77,37 @@ common:
   url: https://www.coolerx.com/
 - type: PrivacyPolicy
   url: https://www.coolerx.com/privacy-policy/
+- type: WellKnown
+  url: well-known/cooler-screens-well-known.yml
+- type: Conformance
+  url: conformance/cooler-screens-conformance.yml
+- type: Plans
+  url: plans/cooler-screens-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/cooler-screens-rate-limits.yml
+- type: ErrorCatalog
+  url: errors/cooler-screens-problem-types.yml
+- type: Authentication
+  url: authentication/cooler-screens-authentication.yml
+- type: OAuthScopes
+  url: scopes/cooler-screens-scopes.yml
+- type: MCPServer
+  url: mcp/cooler-screens-mcp.yml
+- type: Support
+  url: https://coolerx.com/contact/
 x-enrichment:
-  date: '2026-08-09'
-  status: minimal
-  artifacts_added: 2
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 10
   pass: local-v1
-x-coverage:
-  state: gated
-  reason: sales-gate
-  detail: >-
-    CoolerX runs api.coolerx.com and portal.coolerx.com — both resolve to Azure address
-    13.67.211.230 and both refuse connections on 80 and 443 — while the public site has no
-    developer, docs, or API page of any kind, leaving the "Request a Demo" contact form as the
-    only route to the platform.
-  evidence:
-  - url: https://api.coolerx.com/
-    status: 0
-  - url: https://www.coolerx.com/developers
-    status: 404
-  - url: https://www.coolerx.com/.well-known/api-catalog
-    status: 404
-  - url: https://www.coolerx.com/demo/
-    status: 200
-  checked: '2026-08-09'
+  note: >-
+    Round 2 overturned round 1. Round 1 recorded that every /.well-known/ path 404s and
+    that CoolerX has no machine-readable surface. Two paths on the apex host in fact
+    return 200 JSON — RFC 8414 OAuth authorization server metadata and RFC 9728 protected
+    resource metadata — and the latter names a live, OAuth-gated MCP endpoint at
+    https://coolerx.com/wp-json/mcp/mcp-oauth-server. Both documents are saved verbatim.
+    The MCP surface belongs to the WordPress marketing site (MCP Adapter plugin over the
+    WordPress Abilities API), not to the CoolerX retail-media platform, and every artifact
+    in this repo says so. The retail-media platform itself remains sales-gated: no
+    developer portal, no OpenAPI, no pricing, and api.coolerx.com / portal.coolerx.com
+    still refuse TCP connections.

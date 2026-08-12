@@ -1,0 +1,39 @@
+generated: '2026-08-12'
+method: searched
+source: https://coolerx.com/demo/
+name: CoolerX plans and pricing
+description: >-
+  CoolerX publishes no pricing of any kind — no tiers, no rate card, no CPM, no hardware
+  or SaaS list price, and no machine-readable pricing endpoint. The company sells to
+  retailers and brands through an enterprise motion: the "Request a Demo" form is the
+  only route to a commercial conversation. This file records that absence deliberately;
+  an omitted file would read as "not checked".
+plan_count: 0
+currency: null
+billing_model: enterprise-contact-sales
+plans: []
+signup:
+  self_serve: false
+  url: https://coolerx.com/demo/
+  status: 200
+  note: >-
+    A lead form (name, company, role, retailer or brand). There is no account signup, no
+    trial, no free tier and no developer sandbox.
+probed:
+- url: https://coolerx.com/pricing/
+  status: 404
+- url: https://coolerx.com/plans/
+  status: 404
+- url: https://coolerx.com/demo/
+  status: 200
+- url: https://coolerx.com/contact/
+  status: 200
+- url: https://coolerx.com/page-sitemap.xml
+  status: 200
+  note: >-
+    The full Yoast page sitemap lists 15 pages and contains no pricing, plans, packages
+    or rate-card page, confirming the 404s are an absence rather than a moved URL.
+note: >-
+  The advertising side of the platform is described as "self-serve or programmatic
+  buying" on https://coolerx.com/technology/, which implies a buying surface with rates,
+  but no such surface, rate card or media kit is published on the public site.

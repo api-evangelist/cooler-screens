@@ -1,0 +1,32 @@
+generated: '2026-08-12'
+method: probed
+source: https://coolerx.com/.well-known/oauth-authorization-server
+name: CoolerX OAuth scopes
+description: >-
+  The complete published scope surface for CoolerX, read from the RFC 8414 authorization
+  server metadata and confirmed by the RFC 9728 protected resource metadata. Both
+  documents declare exactly one scope. There is no scopes or permissions reference page
+  on any CoolerX host to enrich this from.
+docs: null
+docs_note: >-
+  No permissions/scopes documentation published. CoolerX has no developer portal; probed
+  https://coolerx.com/developers/ (404) and /docs (404) on 2026-08-12.
+authorization_server: https://coolerx.com
+scopes:
+- name: mcp
+  description: >-
+    Access to the CoolerX WordPress MCP server at
+    https://coolerx.com/wp-json/mcp/mcp-oauth-server. The single scope the authorization
+    server advertises and the single scope the protected resource requires. Its
+    granularity is undocumented — the underlying WordPress Abilities API
+    (/wp-json/wp-abilities/v1/abilities) returned 401, so which abilities the scope
+    actually unlocks could not be read.
+  source: well-known/cooler-screens-oauth-authorization-server.json
+  resources:
+  - https://coolerx.com/wp-json/mcp/mcp-oauth-server
+scope_count: 1
+granularity: coarse
+granularity_note: >-
+  A single all-or-nothing scope gates the entire MCP tool surface. There is no read/write
+  split and no per-ability scoping, so a consenting client cannot be granted less than
+  everything the server exposes.

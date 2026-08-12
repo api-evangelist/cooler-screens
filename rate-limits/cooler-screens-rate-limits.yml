@@ -1,0 +1,41 @@
+generated: '2026-08-12'
+method: probed
+source: live response headers from https://coolerx.com/wp-json/ on 2026-08-12
+name: CoolerX rate limits
+description: >-
+  CoolerX documents no rate limits, because it documents no API. The only observable
+  surface is the OAuth-protected MCP endpoint and the WordPress REST root on
+  coolerx.com. Their responses were inspected directly for runtime limit signalling and
+  carry none.
+limit_count: 0
+documented: false
+docs: null
+limits: []
+response_headers:
+  observed: []
+  checked:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  - RateLimit
+  - RateLimit-Policy
+  - Retry-After
+  note: >-
+    None of these appear on any observed response. Full header set on GET
+    https://coolerx.com/wp-json/ (200) and on POST
+    https://coolerx.com/wp-json/mcp/mcp-oauth-server (401) consisted of CORS headers,
+    strict-transport-security, x-powered-by PHP/8.3.29, x-robots-tag noindex,
+    x-content-type-options, x-xss-protection, x-frame-options, Azure Front Door
+    x-azure-ref / x-cache, and Azure App Service routing cookies. An agent gets no
+    runtime budget signal at all.
+exhaustion_status: null
+exhaustion_note: >-
+  Not observed. No throttling was triggered during probing and none is documented, so the
+  status code returned on exhaustion is unknown.
+probed:
+- url: https://coolerx.com/wp-json/
+  status: 200
+- url: https://coolerx.com/wp-json/mcp/mcp-oauth-server
+  status: 401
+- url: https://coolerx.com/wp-json/mcp
+  status: 200

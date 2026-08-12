@@ -1,0 +1,78 @@
+generated: '2026-08-12'
+method: probed
+source: https://coolerx.com/.well-known/oauth-authorization-server
+name: CoolerX authentication profile
+description: >-
+  CoolerX publishes no developer portal and no authentication documentation. This
+  profile is read entirely from the two OAuth metadata documents the apex host serves
+  and from the live 401 challenge returned by the MCP endpoint. It describes access to
+  the coolerx.com WordPress MCP surface only. Access to the CoolerX retail-media
+  platform (api.coolerx.com, portal.coolerx.com) is not documented anywhere public and
+  those hosts refuse connections, so nothing is recorded about it.
+derived_from:
+- well-known/cooler-screens-oauth-authorization-server.json
+- well-known/cooler-screens-oauth-protected-resource.json
+- mcp/cooler-screens-mcp.yml
+docs: null
+docs_note: >-
+  No authentication or developer documentation exists on any CoolerX host. Probed
+  https://coolerx.com/developers/ (404), /developer/ (404), /api/ (404), /docs (404),
+  /api-docs (404) on 2026-08-12.
+schemes:
+- id: oauth2_mcp
+  type: oauth2
+  flow: authorizationCode
+  applies_to: https://coolerx.com/wp-json/mcp/mcp-oauth-server
+  issuer: https://coolerx.com
+  authorization_url: https://coolerx.com/oauth/authorize
+  token_url: https://coolerx.com/oauth/token
+  revocation_url: https://coolerx.com/oauth/revoke
+  response_types:
+  - code
+  grant_types:
+  - authorization_code
+  - refresh_token
+  pkce:
+    required: true
+    code_challenge_methods:
+    - S256
+  client_authentication:
+  - none
+  client_type: public
+  dynamic_client_registration:
+    rfc7591_endpoint: false
+    client_id_metadata_document: true
+    note: >-
+      No registration_endpoint is advertised. The server instead declares
+      client_id_metadata_document_supported, the newer OAuth Client ID Metadata Document
+      pattern in which a client's URL is its client_id, so no registration call is made.
+  scopes:
+  - mcp
+  token_delivery:
+    location: header
+    scheme: Bearer
+    header: Authorization
+  challenge:
+    status: 401
+    www_authenticate: >-
+      Bearer realm="https://coolerx.com",
+      resource_metadata="https://coolerx.com/.well-known/oauth-protected-resource"
+    note: RFC 9728 compliant — the challenge points at the protected-resource document.
+- id: wordpress_application_password
+  type: http
+  scheme: basic
+  applies_to: https://coolerx.com/wp-json/ (WordPress REST API, including mcp-adapter-default-server)
+  note: >-
+    The WordPress REST root at https://coolerx.com/wp-json/ advertises
+    authentication: {"application-passwords": ...}. This is stock WordPress
+    credentialing for the marketing site's CMS, not a CoolerX product credential. Listed
+    for completeness; it is not a developer-facing API key programme.
+observations:
+- no_api_keys_published: true
+- no_signup_or_key_issuance_page: true
+- oidc: false
+  note: /.well-known/openid-configuration returns 404; the AS is OAuth 2.0 only.
+- mtls: false
+caveat: >-
+  Every endpoint above is on coolerx.com, which serves a TLS certificate that expired
+  2025-06-10. A client that validates certificates cannot complete any of these flows.

@@ -1,6 +1,25 @@
-generated: '2026-08-09'
+generated: '2026-08-12'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+rechecked: '2026-08-12'
+recheck_note: >-
+  Re-probed 2026-08-12. Every finding below still holds. The apex certificate
+  (CN=coolerx.com, GeoTrust Global TLS RSA4096 SHA256 2022 CA1, notAfter Jun 10 23:59:59
+  2025 GMT) remains expired — 14 months past expiry — and openssl still returns
+  "verify error:num=10:certificate has expired". www.coolerx.com was reissued and is
+  valid (notBefore Jun 9 2026, notAfter Dec 9 2026), but it 307-redirects to the apex,
+  so the canonical site still terminates on the expired host. This now has an API
+  consequence as well as a web one: the OAuth authorization server, the protected-
+  resource metadata and both MCP endpoints discovered on 2026-08-12 are all served from
+  the apex, so no certificate-validating OAuth or MCP client can reach them. See
+  well-known/cooler-screens-well-known.yml and mcp/cooler-screens-mcp.yml.
+additional_hosts_checked_2026_08_12:
+  no_dns: [app.coolerx.com, developer.coolerx.com, developers.coolerx.com, docs.coolerx.com,
+    media.coolerx.com, ads.coolerx.com, status.coolerx.com, trust.coolerx.com, blog.coolerx.com]
+  note: >-
+    None of these resolve. coolerscreens.com resolves to 13.107.246.40 and
+    www.coolerscreens.com 307-redirects to https://coolerx.com/index.php, following the
+    rebrand.
 hosts:
 - host: www.coolerx.com
   https: true

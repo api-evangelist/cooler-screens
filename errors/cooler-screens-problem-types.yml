@@ -1,0 +1,60 @@
+generated: '2026-08-12'
+method: probed
+source: live responses from https://coolerx.com/wp-json/ on 2026-08-12
+name: CoolerX error catalog
+description: >-
+  There is no OpenAPI to derive an error catalog from and no error reference in any
+  documentation, because CoolerX publishes neither. Every entry below is an error
+  envelope observed on a live unauthenticated request to the MCP / WordPress REST
+  surface on coolerx.com. This is not a complete catalog and cannot be — the rest of the
+  surface is behind OAuth.
+format: wordpress-rest
+format_note: >-
+  Not RFC 9457. Bodies are served as application/json with the WordPress REST shape
+  {"code": <string>, "message": <human string>, "data": {"status": <int>}}. There is no
+  type URI, no title/detail/instance, and no application/problem+json content type.
+envelope:
+  content_type: application/json; charset=UTF-8
+  fields:
+  - name: code
+    type: string
+    note: Machine-readable slug, e.g. mcp_unauthorized, rest_forbidden, rest_no_route.
+  - name: message
+    type: string
+    note: Human-readable sentence; not stable, not localized by default.
+  - name: data.status
+    type: integer
+    note: Duplicates the HTTP status code inside the body.
+problem_types:
+- code: mcp_unauthorized
+  http_status: 401
+  message: MCP authentication required.
+  observed_at: https://coolerx.com/wp-json/mcp/mcp-oauth-server
+  observed_on: '2026-08-12'
+  headers:
+    www-authenticate: >-
+      Bearer realm="https://coolerx.com",
+      resource_metadata="https://coolerx.com/.well-known/oauth-protected-resource"
+  remediation: >-
+    Obtain a bearer token from https://coolerx.com/oauth/token via the authorization
+    code + PKCE flow with scope "mcp", then resend with an Authorization: Bearer header.
+- code: rest_forbidden
+  http_status: 401
+  message: Sorry, you are not allowed to do that.
+  observed_at:
+  - https://coolerx.com/wp-json/mcp/mcp-adapter-default-server
+  - https://coolerx.com/wp-json/wp-abilities/v1/abilities
+  - https://coolerx.com/wp-json/wp-abilities/v1/categories
+  observed_on: '2026-08-12'
+  headers: {}
+  remediation: >-
+    Authenticate to the WordPress REST API. No WWW-Authenticate challenge is returned, so
+    a client gets no machine-readable hint about which scheme to use — the status code is
+    401 while the code slug says "forbidden", which is the standard WordPress conflation
+    of authentication and authorization.
+coverage:
+  observed: 2
+  complete: false
+  note: >-
+    Only anonymous responses could be observed. Authenticated error behaviour, rate-limit
+    responses and any 5xx shape are unknown.
