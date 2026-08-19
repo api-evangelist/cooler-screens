@@ -3,24 +3,20 @@ method: probed
 source: https://coolerx.com/wp-json/mcp
 name: CoolerX Website MCP Server
 status: live-gated
-description: >-
-  CoolerX serves live Model Context Protocol endpoints from its own apex host,
-  coolerx.com. They are published by the WordPress MCP Adapter plugin running on the
-  CoolerX marketing site (WordPress 6.x on Azure App Service, PHP 8.3), which exposes
-  the site's WordPress Abilities API as MCP tools. This is a CONTENT surface for the
-  coolerx.com website — it is NOT the CoolerX retail-media platform, the Intent Engine,
-  the Dynamic Content Engine, or anything reachable at api.coolerx.com. It is recorded
-  here because it is a real, provider-served, callable agent surface on a host CoolerX
-  controls, discovered through the RFC 9728 protected-resource metadata document.
+description: CoolerX serves live Model Context Protocol endpoints from its own apex host, coolerx.com.
+  They are published by the WordPress MCP Adapter plugin running on the CoolerX marketing site (WordPress
+  6.x on Azure App Service, PHP 8.3), which exposes the site's WordPress Abilities API as MCP tools. This
+  is a CONTENT surface for the coolerx.com website — it is NOT the CoolerX retail-media platform, the
+  Intent Engine, the Dynamic Content Engine, or anything reachable at api.coolerx.com. It is recorded
+  here because it is a real, provider-served, callable agent surface on a host CoolerX controls, discovered
+  through the RFC 9728 protected-resource metadata document.
 ownership:
   verified: true
-  evidence: >-
-    The RFC 8414 metadata at https://coolerx.com/.well-known/oauth-authorization-server
-    declares issuer https://coolerx.com, and the RFC 9728 document names the resource
-    https://coolerx.com/wp-json/mcp/mcp-oauth-server. The WordPress REST root at
-    https://coolerx.com/wp-json/ reports name "CoolerX", description "AI-powered
-    in-store retail media & merchandising", url https://coolerx.com. Same registrable
-    domain as the company website; nothing points at a third party.
+  evidence: The RFC 8414 metadata at https://coolerx.com/.well-known/oauth-authorization-server declares
+    issuer https://coolerx.com, and the RFC 9728 document names the resource https://coolerx.com/wp-json/mcp/mcp-oauth-server.
+    The WordPress REST root at https://coolerx.com/wp-json/ reports name "CoolerX", description "AI-powered
+    in-store retail media & merchandising", url https://coolerx.com. Same registrable domain as the company
+    website; nothing points at a third party.
 servers:
 - name: mcp-oauth-server
   url: https://coolerx.com/wp-json/mcp/mcp-oauth-server
@@ -35,13 +31,9 @@ servers:
     request: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
     http_status: 401
     body: '{"code":"mcp_unauthorized","message":"MCP authentication required.","data":{"status":401}}'
-    www_authenticate: >-
-      Bearer realm="https://coolerx.com",
-      resource_metadata="https://coolerx.com/.well-known/oauth-protected-resource"
-  note: >-
-    Correctly implements the MCP authorization flow: an unauthenticated call returns 401
-    with a WWW-Authenticate Bearer challenge that points at the protected-resource
-    metadata document. initialize is gated identically.
+    www_authenticate: Bearer realm="https://coolerx.com", resource_metadata="https://coolerx.com/.well-known/oauth-protected-resource"
+  note: 'Correctly implements the MCP authorization flow: an unauthenticated call returns 401 with a WWW-Authenticate
+    Bearer challenge that points at the protected-resource metadata document. initialize is gated identically.'
 - name: mcp-adapter-default-server
   url: https://coolerx.com/wp-json/mcp/mcp-adapter-default-server
   transport: streamable-http
@@ -55,9 +47,8 @@ servers:
     request: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
     http_status: 401
     body: '{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}'
-  note: >-
-    The adapter's default server, gated by the standard WordPress REST permission check
-    rather than by OAuth. No WWW-Authenticate challenge is returned.
+  note: The adapter's default server, gated by the standard WordPress REST permission check rather than
+    by OAuth. No WWW-Authenticate challenge is returned.
 discovery:
 - url: https://coolerx.com/.well-known/oauth-protected-resource
   status: 200
@@ -67,18 +58,16 @@ discovery:
   note: Public REST namespace index; enumerates both MCP routes and their methods.
 - url: https://coolerx.com/wp-json/
   status: 200
-  note: 'WordPress REST root; namespaces include "mcp" and "wp-abilities/v1".'
+  note: WordPress REST root; namespaces include "mcp" and "wp-abilities/v1".
 tools:
   enumerated: false
   count: null
-  note: >-
-    NOT ENUMERATED. tools/list requires an OAuth bearer token with scope "mcp"; both
-    servers returned 401 to anonymous JSON-RPC. The backing tool definitions live behind
-    the WordPress Abilities API at /wp-json/wp-abilities/v1/abilities, which also
-    returned 401 (rest_forbidden). No tool names, descriptions or inputSchemas are
-    recorded here because none could be read without credentials — deriving a candidate
-    list from the plugin's defaults would be fabrication. Authenticated introspection is
-    required to capture the real tool surface.
+  note: NOT ENUMERATED. tools/list requires an OAuth bearer token with scope "mcp"; both servers returned
+    401 to anonymous JSON-RPC. The backing tool definitions live behind the WordPress Abilities API at
+    /wp-json/wp-abilities/v1/abilities, which also returned 401 (rest_forbidden). No tool names, descriptions
+    or inputSchemas are recorded here because none could be read without credentials — deriving a candidate
+    list from the plugin's defaults would be fabrication. Authenticated introspection is required to capture
+    the real tool surface.
   probed:
   - url: https://coolerx.com/wp-json/wp-abilities/v1/abilities
     status: 401
@@ -89,12 +78,16 @@ implementation:
   host_platform: Azure App Service (coolerx-centralus.azurewebsites.net) behind Azure Front Door
   server_header: PHP/8.3.29
 caveats:
-- >-
-  coolerx.com serves an expired TLS certificate (CN=coolerx.com, expired 2025-06-10).
-  Any MCP client that validates certificates — which is every conforming one — cannot
-  complete a handshake with this endpoint. The surface is live but effectively
-  unreachable until the certificate is renewed.
-- >-
-  Both endpoints carry x-robots-tag: noindex, and there is no documentation of this MCP
-  server anywhere on the CoolerX site. It appears to be plugin-default infrastructure
-  rather than a deliberately published developer product.
+- coolerx.com serves an expired TLS certificate (CN=coolerx.com, expired 2025-06-10). Any MCP client that
+  validates certificates — which is every conforming one — cannot complete a handshake with this endpoint.
+  The surface is live but effectively unreachable until the certificate is renewed.
+- 'Both endpoints carry x-robots-tag: noindex, and there is no documentation of this MCP server anywhere
+  on the CoolerX site. It appears to be plugin-default infrastructure rather than a deliberately published
+  developer product.'
+deployment:
+  mode: remote
+  endpoint: https://coolerx.com/wp-json/mcp/mcp-oauth-server
+  verified: probed
+  probe: gated
+  checked: '2026-08-12'
+  source: catalog MCP census
