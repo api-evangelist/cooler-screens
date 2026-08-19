@@ -17,7 +17,7 @@ x-source: harvest:secondary-market
 x-source-url: https://forgeglobal.com/cooler-screens_stock/
 x-tier: stub
 x-tier-reason: harvest
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-08-09'
 modified: '2026-08-12'
 tags:
