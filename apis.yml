@@ -49,6 +49,12 @@ apis:
   tags:
   - MCP
   - Agents
+  - Authentication
+  - Content Management
+  - WordPress
+  tags_raw:
+  - MCP
+  - Agents
   - OAuth
   - Content Management
   - WordPress
