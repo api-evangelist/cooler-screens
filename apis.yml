@@ -10,6 +10,17 @@ description: 'CoolerX — formerly Cooler Screens — is an in-store retail medi
   Azure with NVIDIA, BOE, LG, Samsung and Foxconn as hardware and infrastructure partners.
   CoolerX sells to retailers and brands through a demo and sales motion; as of this profile it
   publishes no public developer program, API reference, SDK, or machine-readable specification.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.coolerx.com/wp-content/uploads/2025/01/white-on-black-coolerX-logo.png
 url: https://raw.githubusercontent.com/api-evangelist/cooler-screens/refs/heads/main/apis.yml
 x-type: company
