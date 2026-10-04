@@ -105,6 +105,9 @@ apis:
     url: errors/cooler-screens-problem-types.yml
   - type: RateLimits
     url: rate-limits/cooler-screens-rate-limits.yml
+  x-surface: platform-generated
+  x-platform: wordpress
+  x-platform-surface: mcp-plugin
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
