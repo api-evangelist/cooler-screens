@@ -64,5 +64,112 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-CoolerX is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/cooler-screens_stock/
+CoolerX — formerly Cooler Screens — is an in-store retail media and merchandising technology company that turns cooler doors, endcaps, checkout coolers and pharmacy fixtures into IoT-connected digital screens. The platform pairs an AI "Intent Engine" for contextual targeting and conversion-funnel optimization with a Dynamic Content Engine for creative optimization, alongside campaign management, real-time measurement, and a data integration hub for product, price, promotion and context data. It is deployed with retailers including Kroger, Walgreens, Giant Eagle's GetGo, Chevron and Western Union, and is built on Microsoft Azure with NVIDIA, BOE, LG, Samsung and Foxconn as hardware and infrastructure partners. CoolerX sells to retailers and brands through a demo and sales motion; as of this profile it publishes no public developer program, API reference, SDK, or machine-readable specification.
+
+**Areas:** Company · Retail · Retail Media · Advertising · Digital Signage · In-Store Media · Merchandising · Artificial Intelligence · IoT
+
+## CoolerX on APIs.io
+
+Everything profiled for CoolerX is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/cooler-screens/](https://apis.io/providers/cooler-screens/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [CoolerX Website MCP Server](https://apis.io/apis/cooler-screens/coolerx-website-mcp-server/) — A live, OAuth-protected Model Context Protocol endpoint served by CoolerX from its own apex host and discovered through the RFC 9728 protected-resource…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [CoolerX Website MCP Server](https://apis.io/servers/cooler-screens/coolerx-website-mcp-server/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Cooler Screens Authentication](https://apis.io/security/cooler-screens/cooler-screens-authentication/)
+- [Cooler Screens Domain Security](https://apis.io/security/cooler-screens/cooler-screens-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Cooler Screens Scopes](https://apis.io/scopes/cooler-screens/cooler-screens-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Cooler Screens Plans Pricing](https://apis.io/plans/cooler-screens/cooler-screens-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Cooler Screens Rate Limits](https://apis.io/rate-limits/cooler-screens/cooler-screens-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.coolerx.com/)
+- [Support](https://coolerx.com/contact/)
+- [Privacy policy](https://www.coolerx.com/privacy-policy/)
+
+## API Evangelist rating
+
+**Kin Score 15.9** — emerging · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 14.3 |
+| Access clarity | 10.5 |
+
+**Agent readiness 10.1** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 28.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/cooler-screens/](https://apis.io/providers/cooler-screens/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for CoolerX: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/cooler-screens/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
